@@ -1,0 +1,17 @@
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Infrastructure.deps.json
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Infrastructure.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Infrastructure.pdb
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Application.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Domain.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Domain.pdb
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\bin\Debug\net8.0\Inventory.Application.pdb
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.csproj.AssemblyReference.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.AssemblyInfoInputs.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.AssemblyInfo.cs
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventor.89798F14.Up2Date
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\refint\Inventory.Infrastructure.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.pdb
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\ref\Inventory.Infrastructure.dll
