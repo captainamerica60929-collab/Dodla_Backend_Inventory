@@ -5,12 +5,14 @@ using Inventory.Application.GrnResponses.DTOs;
 using Inventory.Domain.Entities;
 using Inventory.Domain.Enums;
 using Inventory.Domain.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Controllers;
 
 [ApiController]
 [Route("api/grn-mapping")]
+[Authorize(Policy = "GrnManage")]
 public class GrnMappingController : ControllerBase
 {
     public const int MaxJsonSizeBytes = 256 * 1024; // 256 KB

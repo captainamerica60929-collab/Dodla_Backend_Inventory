@@ -1,5 +1,6 @@
 using Inventory.Application.Branches.DTOs;
 using Inventory.Application.Branches.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Controllers;
@@ -16,6 +17,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = "MastersView")]
     public async Task<ActionResult<IReadOnlyList<BranchDto>>> GetAll([FromQuery] bool? activeOnly, CancellationToken ct)
     {
         var branches = await _branchService.GetAllAsync(activeOnly, ct);
@@ -23,6 +25,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(Policy = "MastersView")]
     public async Task<ActionResult<BranchDto>> GetById(int id, CancellationToken ct)
     {
         var branch = await _branchService.GetByIdAsync(id, ct);
@@ -30,6 +33,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "MastersEdit")]
     public async Task<ActionResult<BranchDto>> Create([FromBody] CreateBranchDto dto, CancellationToken ct)
     {
         var branch = await _branchService.CreateAsync(dto, ct);
@@ -37,6 +41,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = "MastersEdit")]
     public async Task<ActionResult<BranchDto>> Update(int id, [FromBody] UpdateBranchDto dto, CancellationToken ct)
     {
         var branch = await _branchService.UpdateAsync(id, dto, ct);
@@ -44,6 +49,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Policy = "MastersEdit")]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
         await _branchService.DeleteAsync(id, ct);

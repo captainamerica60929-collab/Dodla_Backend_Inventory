@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Inventory\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Inventory\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAowB0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T05:49:58.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory.Application\\DependencyInjection.cs",
               "RelativeDocumentMoniker": "Inventory.Application\\DependencyInjection.cs",
@@ -38,20 +55,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Program.cs",
               "RelativeDocumentMoniker": "Inventory\\Program.cs",
               "ToolTip": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Program.cs",
               "RelativeToolTip": "Inventory\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAAAsAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-10T06:41:09.328Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\appsettings.json",
               "RelativeDocumentMoniker": "Inventory\\appsettings.json",

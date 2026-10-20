@@ -95,6 +95,7 @@ public class GrnApiResponseConfiguration : IEntityTypeConfiguration<GrnApiRespon
         builder.HasIndex(r => new { r.BranchId, r.GrnNo });
         builder.HasIndex(r => new { r.BranchId, r.SourceKey });
         builder.HasIndex(r => new { r.BranchId, r.Status });
+        builder.HasIndex(r => new { r.BranchId, r.Status, r.GrnDate });
 
         // Relationship
         builder.HasOne(r => r.ApiCredential)

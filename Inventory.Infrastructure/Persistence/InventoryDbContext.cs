@@ -18,7 +18,7 @@ public class InventoryDbContext : DbContext
         ICurrentUser? currentUser = null,
         IClock? clock = null) : base(options)
     {
-        _currentUser = currentUser ?? new DevCurrentUser();
+        _currentUser = currentUser ?? SystemCurrentUser.Instance;
         _clock = clock ?? new DateTimeClock();
     }
 
@@ -26,6 +26,14 @@ public class InventoryDbContext : DbContext
     public DbSet<ApiCredential> ApiCredentials => Set<ApiCredential>();
     public DbSet<ApiFieldMapping> ApiFieldMappings => Set<ApiFieldMapping>();
     public DbSet<GrnApiResponse> GrnApiResponses => Set<GrnApiResponse>();
+    public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<AppUser> AppUsers => Set<AppUser>();
+    public DbSet<UserBranch> UserBranches => Set<UserBranch>();
+    public DbSet<Material> Materials => Set<Material>();
+    public DbSet<Location> Locations => Set<Location>();
+    public DbSet<Tag> Tags => Set<Tag>();
+    public DbSet<TagPrintLog> TagPrintLogs => Set<TagPrintLog>();
+    public DbSet<TagCounter> TagCounters => Set<TagCounter>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,14 +56,18 @@ public class InventoryDbContext : DbContext
 
         // Explicitly define matching query filter for ApiFieldMapping (child of branch-scoped ApiCredential)
         modelBuilder.Entity<ApiFieldMapping>()
-            .HasQueryFilter(m => m.ApiCredential != null && m.ApiCredential.BranchId == _currentUser.BranchId);
+            .HasQueryFilter(m => _currentUser.IsSystem || (m.ApiCredential != null && m.ApiCredential.BranchId == _currentUser.BranchId));
+
+        // Explicitly define matching query filter for TagPrintLog (child of branch-scoped Tag)
+        modelBuilder.Entity<TagPrintLog>()
+            .HasQueryFilter(l => _currentUser.IsSystem || (l.Tag != null && l.Tag.BranchId == _currentUser.BranchId));
     }
 
     private void ConfigureBranchFilter<TEntity>(ModelBuilder modelBuilder) where TEntity : class, IBranchScoped
     {
         // Enforce tenant/branch isolation via Global Query Filters.
-        // NOTE: Admin cross-branch reads must use IgnoreQueryFilters() or Dapper explicitly.
-        modelBuilder.Entity<TEntity>().HasQueryFilter(e => e.BranchId == _currentUser.BranchId);
+        // Bypassed when IsSystem is true (seeders/migrations).
+        modelBuilder.Entity<TEntity>().HasQueryFilter(e => _currentUser.IsSystem || e.BranchId == _currentUser.BranchId);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -63,17 +75,23 @@ public class InventoryDbContext : DbContext
         var utcNow = _clock.UtcNow;
         var currentUserId = _currentUser.UserId;
         var currentBranchId = _currentUser.BranchId;
+        var isSystem = _currentUser.IsSystem;
 
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {
             if (entry.State == EntityState.Added)
             {
                 entry.Entity.CreatedAt = utcNow;
-                entry.Entity.CreatedBy = currentUserId;
+                entry.Entity.CreatedBy = currentUserId == 0 ? null : currentUserId;
 
                 if (entry.Entity is IBranchScoped branchScoped)
                 {
-                    if (branchScoped.BranchId == 0)
+                    if (isSystem)
+                    {
+                        // System scope: BranchId must be set explicitly by the caller.
+                        // No auto-set and no cross-branch guard.
+                    }
+                    else if (branchScoped.BranchId == 0)
                     {
                         branchScoped.BranchId = currentBranchId;
                     }
@@ -86,7 +104,7 @@ public class InventoryDbContext : DbContext
             else if (entry.State == EntityState.Modified)
             {
                 entry.Entity.ModifiedAt = utcNow;
-                entry.Entity.ModifiedBy = currentUserId;
+                entry.Entity.ModifiedBy = currentUserId == 0 ? null : currentUserId;
             }
         }
 

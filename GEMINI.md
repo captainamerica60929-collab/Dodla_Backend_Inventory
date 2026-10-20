@@ -3,7 +3,7 @@
 Applies when working in this folder. Shared rules are in the parent GEMINI.md.
 Use the `dotnet-clean-architecture`, `wms-domain-rules` and `sap-integration` skills.
 
-## Commands (run from this folder)
+## Commands (run from this folder)o
 - Build:  dotnet build
 - Test:   dotnet test
 - Run:    dotnet run --project Inventory

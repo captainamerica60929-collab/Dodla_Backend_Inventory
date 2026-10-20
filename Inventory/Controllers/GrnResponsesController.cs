@@ -1,11 +1,13 @@
 using Inventory.Application.GrnResponses.DTOs;
 using Inventory.Application.GrnResponses.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Controllers;
 
 [ApiController]
 [Route("api/grn-responses")]
+[Authorize(Policy = "StockOps")]
 public class GrnResponsesController : ControllerBase
 {
     private readonly IGrnResponseService _grnResponseService;

@@ -15,3 +15,4 @@ D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\refint\Inventory.Infrastructure.dll
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.pdb
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\ref\Inventory.Infrastructure.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.sourcelink.json

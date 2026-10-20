@@ -13,3 +13,4 @@ D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\ob
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\refint\Inventory.Application.dll
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.pdb
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\ref\Inventory.Application.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.sourcelink.json

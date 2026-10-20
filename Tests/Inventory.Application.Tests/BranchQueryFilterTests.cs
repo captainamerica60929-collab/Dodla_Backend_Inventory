@@ -33,6 +33,8 @@ public class FakeCurrentUser : ICurrentUser
 {
     public int UserId { get; set; } = 10;
     public int BranchId { get; set; } = 1;
+    public string Role { get; set; } = "Admin";
+    public bool IsSystem { get; set; } = false;
 }
 
 public class FakeClock : IClock

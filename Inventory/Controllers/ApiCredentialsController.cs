@@ -1,5 +1,6 @@
 using Inventory.Application.ApiCredentials.DTOs;
 using Inventory.Application.ApiCredentials.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Controllers;
@@ -9,15 +10,14 @@ namespace Inventory.Controllers;
 public class ApiCredentialsController : ControllerBase
 {
     private readonly IApiCredentialService _credentialService;
-    private readonly IHostEnvironment _environment;
 
-    public ApiCredentialsController(IApiCredentialService credentialService, IHostEnvironment environment)
+    public ApiCredentialsController(IApiCredentialService credentialService)
     {
         _credentialService = credentialService;
-        _environment = environment;
     }
 
     [HttpGet]
+    [Authorize(Policy = "MastersView")]
     public async Task<ActionResult<IReadOnlyList<ApiCredentialDto>>> GetAll(CancellationToken ct)
     {
         var credentials = await _credentialService.GetAllAsync(ct);
@@ -25,6 +25,7 @@ public class ApiCredentialsController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(Policy = "MastersView")]
     public async Task<ActionResult<ApiCredentialDto>> GetById(int id, CancellationToken ct)
     {
         var credential = await _credentialService.GetByIdAsync(id, ct);
@@ -32,6 +33,7 @@ public class ApiCredentialsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<ActionResult<ApiCredentialDto>> Create([FromBody] CreateApiCredentialDto dto, CancellationToken ct)
     {
         var credential = await _credentialService.CreateAsync(dto, ct);
@@ -39,6 +41,7 @@ public class ApiCredentialsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<ActionResult<ApiCredentialDto>> Update(int id, [FromBody] UpdateApiCredentialDto dto, CancellationToken ct)
     {
         var credential = await _credentialService.UpdateAsync(id, dto, ct);
@@ -46,6 +49,7 @@ public class ApiCredentialsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
         await _credentialService.DeleteAsync(id, ct);
@@ -53,6 +57,7 @@ public class ApiCredentialsController : ControllerBase
     }
 
     [HttpGet("{id:int}/mappings")]
+    [Authorize(Policy = "MastersView")]
     public async Task<ActionResult<IReadOnlyList<ApiFieldMappingDto>>> GetMappings(int id, CancellationToken ct)
     {
         var mappings = await _credentialService.GetMappingsAsync(id, ct);
@@ -60,6 +65,7 @@ public class ApiCredentialsController : ControllerBase
     }
 
     [HttpPut("{id:int}/mappings")]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<ActionResult<IReadOnlyList<ApiFieldMappingDto>>> ReplaceMappings(
         int id,
         [FromBody] List<UpsertApiFieldMappingDto> mappings,
@@ -69,62 +75,38 @@ public class ApiCredentialsController : ControllerBase
         return Ok(updated);
     }
 
-    // TODO: [Authorize(Roles = "Admin")] - Add Admin authorization when JWT auth is implemented.
-    // Register the test and preview endpoints only in the Development environment until JWT [Authorize(Admin)] exists.
+    /// <summary>
+    /// Test API connection. Restricted to Admin (ApiAdmin policy).
+    /// </summary>
     [HttpPost("{id:int}/test")]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<ActionResult<ApiTestResultDto>> TestConnection(int id, CancellationToken ct)
     {
-        if (!_environment.IsDevelopment())
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new ProblemDetails
-            {
-                Status = StatusCodes.Status403Forbidden,
-                Title = "Forbidden",
-                Detail = "API test endpoint is restricted to Development environment until JWT Admin authorization is active."
-            });
-        }
-
         var result = await _credentialService.TestConnectionAsync(id, ct);
         return Ok(result);
     }
 
-    // TODO: [Authorize(Roles = "Admin")] - Add Admin authorization when JWT auth is implemented.
-    // Register the test and preview endpoints only in the Development environment until JWT [Authorize(Admin)] exists.
+    /// <summary>
+    /// Preview field mapping against live data. Restricted to Admin (ApiAdmin policy).
+    /// </summary>
     [HttpPost("{id:int}/preview-mapping")]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<ActionResult<MappingPreviewResultDto>> PreviewMapping(int id, CancellationToken ct)
     {
-        if (!_environment.IsDevelopment())
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new ProblemDetails
-            {
-                Status = StatusCodes.Status403Forbidden,
-                Title = "Forbidden",
-                Detail = "API preview-mapping endpoint is restricted to Development environment until JWT Admin authorization is active."
-            });
-        }
-
         var result = await _credentialService.PreviewMappingAsync(id, ct);
         return Ok(result);
     }
 
-    // TODO: [Authorize(Roles = "Admin")] - Add Admin authorization when JWT auth is implemented.
-    // Register the fetch endpoint only in the Development environment until JWT [Authorize(Admin)] exists.
+    /// <summary>
+    /// Fetch GRN data from the live API. Restricted to Admin (ApiAdmin policy).
+    /// </summary>
     [HttpPost("{id:int}/fetch")]
+    [Authorize(Policy = "ApiAdmin")]
     public async Task<ActionResult<Inventory.Application.GrnResponses.DTOs.FetchResultDto>> Fetch(
         int id,
         [FromBody] Inventory.Application.GrnResponses.DTOs.FetchGrnRequestDto request,
         CancellationToken ct)
     {
-        if (!_environment.IsDevelopment())
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new ProblemDetails
-            {
-                Status = StatusCodes.Status403Forbidden,
-                Title = "Forbidden",
-                Detail = "Live GRN fetch endpoint is restricted to Development environment until JWT Admin authorization is active."
-            });
-        }
-
         var result = await _credentialService.FetchAsync(id, request, ct);
         return Ok(result);
     }

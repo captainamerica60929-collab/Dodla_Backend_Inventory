@@ -8,17 +8,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Inventory.Infrastructure.Services;
 
+/// <summary>
+/// Development-only seeder for the Mock GRN API credential.
+/// Uses SystemCurrentUser scope so the branch guard is bypassed.
+/// </summary>
 public class DevDataSeeder
 {
     private readonly InventoryDbContext _context;
     private readonly ISecretProtector _secretProtector;
-    private readonly IHostEnvironment _environment;
+    private readonly IHostEnvironment? _environment;
     private readonly ILogger<DevDataSeeder> _logger;
 
     public DevDataSeeder(
         InventoryDbContext context,
         ISecretProtector secretProtector,
-        IHostEnvironment environment,
+        IHostEnvironment? environment,
         ILogger<DevDataSeeder> logger)
     {
         _context = context;
@@ -27,12 +31,19 @@ public class DevDataSeeder
         _logger = logger;
     }
 
+    public DevDataSeeder(
+        InventoryDbContext context,
+        ISecretProtector secretProtector,
+        ILogger<DevDataSeeder> logger) : this(context, secretProtector, null, logger)
+    {
+    }
+
     public async Task SeedAsync(CancellationToken ct = default)
     {
-        if (!_environment.IsDevelopment())
+        if (_environment != null && !_environment.IsDevelopment())
             return;
 
-        // Idempotent check: ensure Mock GRN API (dev) is only created once
+        // Idempotent check
         var exists = await _context.ApiCredentials
             .IgnoreQueryFilters()
             .AnyAsync(c => c.Name == "Mock GRN API (dev)", ct);
@@ -44,7 +55,7 @@ public class DevDataSeeder
 
         var credential = new ApiCredential
         {
-            BranchId = 1,
+            BranchId = 1,   // explicitly set; system scope bypasses branch guard
             Name = "Mock GRN API (dev)",
             BaseUrl = "http://localhost:5114/api/dev/mock-grn",
             HttpMethod = "POST",
@@ -58,55 +69,13 @@ public class DevDataSeeder
             IsActive = true
         };
 
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "GRNNo",
-            TargetColumn = TargetColumn.GrnNo,
-            IsRequired = true
-        });
-
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "GRN Date",
-            TargetColumn = TargetColumn.GrnDate,
-            Format = "yyyy-MM-dd hh:mm tt",
-            IsRequired = false
-        });
-
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "PartName",
-            TargetColumn = TargetColumn.PartName,
-            IsRequired = false
-        });
-
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "InvoiceNo",
-            TargetColumn = TargetColumn.InvoiceNo,
-            IsRequired = false
-        });
-
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "Description",
-            TargetColumn = TargetColumn.Description,
-            IsRequired = false
-        });
-
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "Qty",
-            TargetColumn = TargetColumn.Qty,
-            IsRequired = true
-        });
-
-        credential.FieldMappings.Add(new ApiFieldMapping
-        {
-            SourceField = "Plant",
-            TargetColumn = TargetColumn.Plant,
-            IsRequired = false
-        });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "GRNNo",      TargetColumn = TargetColumn.GrnNo,      IsRequired = true });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "GRN Date",   TargetColumn = TargetColumn.GrnDate,    Format = "yyyy-MM-dd hh:mm tt", IsRequired = false });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "PartName",   TargetColumn = TargetColumn.PartName,   IsRequired = false });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "InvoiceNo",  TargetColumn = TargetColumn.InvoiceNo,  IsRequired = false });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "Description",TargetColumn = TargetColumn.Description,IsRequired = false });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "Qty",        TargetColumn = TargetColumn.Qty,        IsRequired = true });
+        credential.FieldMappings.Add(new ApiFieldMapping { SourceField = "Plant",      TargetColumn = TargetColumn.Plant,      IsRequired = false });
 
         _context.ApiCredentials.Add(credential);
         await _context.SaveChangesAsync(ct);

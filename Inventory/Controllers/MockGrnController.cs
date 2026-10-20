@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Controllers;
@@ -5,9 +6,11 @@ namespace Inventory.Controllers;
 /// <summary>
 /// Development-only Mock GRN API for exercising authentication, mapping, and error paths.
 /// Not accessible outside Development environment.
+/// [AllowAnonymous] — the mock API uses its own X-Api-Key header check (not JWT).
 /// </summary>
 [ApiController]
 [Route("api/dev/mock-grn")]
+[AllowAnonymous]
 public class MockGrnController : ControllerBase
 {
     private readonly IHostEnvironment _environment;

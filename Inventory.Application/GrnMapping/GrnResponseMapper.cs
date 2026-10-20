@@ -152,19 +152,49 @@ public static class GrnResponseMapper
                 break;
 
             case TargetColumn.GrnDate:
-                if (!string.IsNullOrWhiteSpace(mapping.Format))
+                var formats = !string.IsNullOrWhiteSpace(mapping.Format)
+                    ? mapping.Format
+                        .Split('|', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(f => f.Trim())
+                        .Where(f => !string.IsNullOrEmpty(f))
+                        .ToArray()
+                    : Array.Empty<string>();
+
+                if (formats.Length > 0)
                 {
-                    if (DateTime.TryParseExact(value.Trim(), mapping.Format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dtExact))
-                        row.GrnDate = dtExact;
+                    DateTime? parsedDate = null;
+                    foreach (var fmt in formats)
+                    {
+                        if (DateTime.TryParseExact(value.Trim(), fmt, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dtExact))
+                        {
+                            parsedDate = dtExact;
+                            break;
+                        }
+                    }
+
+                    if (parsedDate.HasValue)
+                    {
+                        row.GrnDate = parsedDate.Value;
+                    }
                     else
-                        rowErrors.Add($"Failed to parse GrnDate '{value}' using format '{mapping.Format}'.");
+                    {
+                        var displayVal = value.Length > 40 ? value[..40] : value;
+                        var formatLabel = formats.Length > 1 ? "formats" : "format";
+                        var formatsText = string.Join(" | ", formats);
+                        rowErrors.Add($"Failed to parse GrnDate for field '{mapping.SourceField}' with value '{displayVal}' using {formatLabel} '{formatsText}'.");
+                    }
                 }
                 else
                 {
                     if (DateTime.TryParse(value.Trim(), CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
+                    {
                         row.GrnDate = dt;
+                    }
                     else
-                        rowErrors.Add($"Failed to parse GrnDate '{value}'.");
+                    {
+                        var displayVal = value.Length > 40 ? value[..40] : value;
+                        rowErrors.Add($"Failed to parse GrnDate for field '{mapping.SourceField}' with value '{displayVal}'.");
+                    }
                 }
                 break;
 

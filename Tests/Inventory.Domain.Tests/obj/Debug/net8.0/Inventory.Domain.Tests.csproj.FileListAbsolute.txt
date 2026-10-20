@@ -100,3 +100,4 @@ D:\Projects\angular project\Inventory\Backend\Inventory\Tests\Inventory.Domain.T
 D:\Projects\angular project\Inventory\Backend\Inventory\Tests\Inventory.Domain.Tests\obj\Debug\net8.0\Inventory.Domain.Tests.pdb
 D:\Projects\angular project\Inventory\Backend\Inventory\Tests\Inventory.Domain.Tests\obj\Debug\net8.0\Inventory.Domain.Tests.genruntimeconfig.cache
 D:\Projects\angular project\Inventory\Backend\Inventory\Tests\Inventory.Domain.Tests\obj\Debug\net8.0\ref\Inventory.Domain.Tests.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Tests\Inventory.Domain.Tests\obj\Debug\net8.0\Inventory.Domain.Tests.sourcelink.json

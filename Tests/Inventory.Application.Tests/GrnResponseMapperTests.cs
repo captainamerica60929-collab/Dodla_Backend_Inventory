@@ -222,4 +222,208 @@ public class GrnResponseMapperTests
         Assert.Equal(2, rows.Count);
         Assert.All(rows, r => Assert.Equal(expectedBranchId, r.BranchId));
     }
+
+    [Fact]
+    public void Map_GrnDate_TwoFormats_ShouldParseWhenSecondMatches()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "yyyy-MM-dd | dd/MM/yyyy" }
+        };
+
+        const string json = """
+        {
+          "GRNNo": "GRN-01",
+          "GRN Date": "15/10/2026"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        Assert.Equal(new DateTime(2026, 10, 15), rows[0].GrnDate);
+    }
+
+    [Fact]
+    public void Map_GrnDate_FirstFormatTakesPrecedenceWhenBothMatch()
+    {
+        // yyyy-dd-MM matches 2026-05-10 as 5th October 2026
+        // yyyy-MM-dd matches 2026-05-10 as 10th May 2026
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "yyyy-dd-MM | yyyy-MM-dd" }
+        };
+
+        const string json = """
+        {
+          "GRNNo": "GRN-02",
+          "GRN Date": "2026-05-10"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        // First format wins (5th October 2026, not 10th May 2026)
+        Assert.Equal(new DateTime(2026, 10, 5), rows[0].GrnDate);
+    }
+
+    [Fact]
+    public void Map_GrnDate_NoneMatching_ShouldIncludeSourceFieldAndFormatsAndTruncateValueWithoutFullRow()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "yyyy-MM-dd | dd/MM/yyyy" }
+        };
+
+        // Long string exceeding 40 characters
+        const string longInvalidValue = "2026.10.15-invalid-date-string-exceeding-forty-characters-boundary";
+        var json = $$"""
+        {
+          "GRNNo": "GRN-LONG-FAIL",
+          "GRN Date": "{{longInvalidValue}}",
+          "PartName": "SecretSensitivePartNameShouldNotBeInError"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.Error, rows[0].Status);
+        var err = rows[0].ErrorMessage!;
+
+        // Must contain source field name
+        Assert.Contains("GRN Date", err);
+        // Must contain formats tried
+        Assert.Contains("yyyy-MM-dd | dd/MM/yyyy", err);
+        // Must contain value truncated to 40 characters
+        var expectedTruncated = longInvalidValue[..40];
+        Assert.Contains(expectedTruncated, err);
+        Assert.DoesNotContain(longInvalidValue, err);
+        // Must never contain the full row or RawJson or other row fields
+        Assert.DoesNotContain("SecretSensitivePartNameShouldNotBeInError", err);
+        Assert.DoesNotContain("GRN-LONG-FAIL", err);
+    }
+
+    [Fact]
+    public void Map_GrnDate_WhitespaceAroundPipe_ShouldTrimAndParse()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "   yyyy-MM-dd   |    dd-MM-yyyy   " }
+        };
+
+        const string json = """
+        {
+          "GRNNo": "GRN-03",
+          "GRN Date": "15-10-2026"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        Assert.Equal(new DateTime(2026, 10, 15), rows[0].GrnDate);
+    }
+
+    [Fact]
+    public void Map_GrnDate_AmPmFormat_ShouldParseCorrectly()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "yyyy-MM-dd hh:mm tt" }
+        };
+
+        const string json = """
+        {
+          "GRNNo": "GRN-04",
+          "GRN Date": "2026-10-15 02:30 PM"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        Assert.Equal(new DateTime(2026, 10, 15, 14, 30, 0), rows[0].GrnDate);
+    }
+
+    [Fact]
+    public void Map_GrnDate_24HourFormat_ShouldParseCorrectly()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "yyyy-MM-dd HH:mm:ss" }
+        };
+
+        const string json = """
+        {
+          "GRNNo": "GRN-05",
+          "GRN Date": "2026-10-15 14:30:00"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        Assert.Equal(new DateTime(2026, 10, 15, 14, 30, 0), rows[0].GrnDate);
+    }
+
+    [Fact]
+    public void Map_GrnDate_CombinedAmPmAnd24HourFormats_ShouldParseBoth()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "yyyy-MM-dd hh:mm tt | yyyy-MM-dd HH:mm:ss" }
+        };
+
+        const string json = """
+        [
+          { "GRNNo": "GRN-06A", "GRN Date": "2026-10-15 02:30 PM" },
+          { "GRNNo": "GRN-06B", "GRN Date": "2026-10-15 14:30:00" }
+        ]
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Equal(2, rows.Count);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        Assert.Equal(new DateTime(2026, 10, 15, 14, 30, 0), rows[0].GrnDate);
+        Assert.Equal(GrnResponseStatus.New, rows[1].Status);
+        Assert.Equal(new DateTime(2026, 10, 15, 14, 30, 0), rows[1].GrnDate);
+    }
+
+    [Fact]
+    public void Map_GrnDate_EmptyOrPipeOnlyFormat_ShouldFallbackToDefaultTryParse()
+    {
+        var mappings = new List<ApiFieldMapping>
+        {
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnNo, SourceField = "GRNNo", IsRequired = true },
+            new ApiFieldMapping { TargetColumn = TargetColumn.GrnDate, SourceField = "GRN Date", Format = "   |   |   " }
+        };
+
+        const string json = """
+        {
+          "GRNNo": "GRN-07",
+          "GRN Date": "2026-10-15T10:20:30"
+        }
+        """;
+
+        var rows = GrnResponseMapper.Map(json, mappings, null, 1, 1, Guid.NewGuid(), null, DateTime.UtcNow);
+
+        Assert.Single(rows);
+        Assert.Equal(GrnResponseStatus.New, rows[0].Status);
+        Assert.Equal(new DateTime(2026, 10, 15, 10, 20, 30), rows[0].GrnDate);
+    }
 }

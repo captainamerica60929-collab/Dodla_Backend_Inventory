@@ -26,10 +26,15 @@ public class GlobalExceptionHandler : IExceptionHandler
 
         var (statusCode, title, detail) = exception switch
         {
-            DomainException domainEx => (
+            DomainException domainEx =>  (
                 StatusCodes.Status422UnprocessableEntity,
                 "Unprocessable Entity",
                 domainEx.Message),
+
+            UnauthorizedException unauthorizedEx => (
+                StatusCodes.Status401Unauthorized,
+                "Unauthorized",
+                unauthorizedEx.Message),
 
             NotFoundException notFoundEx => (
                 StatusCodes.Status404NotFound,
