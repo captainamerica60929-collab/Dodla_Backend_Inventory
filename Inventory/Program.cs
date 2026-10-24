@@ -42,9 +42,12 @@ builder.Services.AddProblemDetails();
 // CORS: allow only the Angular dev origin (http://localhost:4200)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AngularDevOrigin", policy =>
+    options.AddPolicy("AllowProduction", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins(
+                  "https://dodladairy.genuineitsolution.com",
+                  "https://Dodladairy.genuineitsolution.com",
+                  "http://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -78,7 +81,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ApiAdmin",     p => p.RequireRole("Admin"));
     options.AddPolicy("GrnManage",    p => p.RequireRole("Admin", "StoreKeeper"));
     options.AddPolicy("StockOps",     p => p.RequireRole("Admin", "StoreKeeper", "Operator"));
-    options.AddPolicy("ReportsView",  p => p.RequireRole("Admin", "StoreKeeper", "Viewer"));
+    options.AddPolicy("ReportsView",  p => p.RequireRole("Admin", "StoreKeeper", "Viewer", "Operator"));
 });
 
 // Clean Architecture Layer Dependency Injections
@@ -98,7 +101,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AngularDevOrigin");
+app.UseCors("AllowProduction");
 
 app.UseRateLimiter();
 

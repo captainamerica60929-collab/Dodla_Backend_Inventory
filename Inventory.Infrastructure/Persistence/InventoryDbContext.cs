@@ -34,6 +34,8 @@ public class InventoryDbContext : DbContext
     public DbSet<Tag> Tags => Set<Tag>();
     public DbSet<TagPrintLog> TagPrintLogs => Set<TagPrintLog>();
     public DbSet<TagCounter> TagCounters => Set<TagCounter>();
+    public DbSet<StockRecord> StockRecords => Set<StockRecord>();
+    public DbSet<StockMovement> StockMovements => Set<StockMovement>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,0 +1,12 @@
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\bin\Release\net8.0\Inventory.Domain.deps.json
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\bin\Release\net8.0\Inventory.Domain.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\bin\Release\net8.0\Inventory.Domain.pdb
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.AssemblyInfoInputs.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.AssemblyInfo.cs
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.csproj.CoreCompileInputs.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.sourcelink.json
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\refint\Inventory.Domain.dll
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\Inventory.Domain.pdb
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Domain\obj\Release\net8.0\ref\Inventory.Domain.dll

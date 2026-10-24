@@ -8,9 +8,9 @@ D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\ob
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.AssemblyInfoInputs.cache
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.AssemblyInfo.cs
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.csproj.CoreCompileInputs.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.sourcelink.json
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventor.1DAC6D85.Up2Date
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.dll
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\refint\Inventory.Application.dll
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.pdb
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\ref\Inventory.Application.dll
-D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Application\obj\Debug\net8.0\Inventory.Application.sourcelink.json

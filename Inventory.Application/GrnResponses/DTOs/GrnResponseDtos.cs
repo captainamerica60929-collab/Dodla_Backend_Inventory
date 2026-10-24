@@ -14,7 +14,7 @@ public record GrnResponseFilterDto(
 public record GrnResponseListItemDto(
     int Id,
     int BranchId,
-    int ApiCredentialId,
+    int? ApiCredentialId,
     Guid FetchBatchId,
     DateTime FetchedAt,
     int? FetchedBy,
@@ -44,7 +44,7 @@ public record GrnResponseListItemDto(
 public record GrnResponseDetailDto(
     int Id,
     int BranchId,
-    int ApiCredentialId,
+    int? ApiCredentialId,
     Guid FetchBatchId,
     DateTime FetchedAt,
     int? FetchedBy,

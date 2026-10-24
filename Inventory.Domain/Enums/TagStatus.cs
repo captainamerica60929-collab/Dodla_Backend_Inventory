@@ -6,5 +6,7 @@ public enum TagStatus
     Printed,
     InStock,
     Issued,
+    Accepted,
+    Rejected,
     Void
 }

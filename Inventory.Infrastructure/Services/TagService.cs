@@ -192,6 +192,7 @@ public class TagService : ITagService
                 GrnApiResponseId = row.Id,
                 TagNo = tagNo,
                 Qty = qtyInt,
+                RemainingQty = qtyInt,
                 Status = TagStatus.Generated,
                 PrintCount = 0
             };

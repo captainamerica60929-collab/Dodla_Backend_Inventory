@@ -133,6 +133,9 @@ public static class DependencyInjection
         services.AddScoped<Inventory.Application.Locations.Services.ILocationService, LocationService>();
         services.AddScoped<ITagNumberAllocator, SqlServerTagNumberAllocator>();
         services.AddScoped<Inventory.Application.Tags.Services.ITagService, TagService>();
+        services.AddScoped<Inventory.Application.Stock.Services.IStockService, StockService>();
+        services.AddScoped<Inventory.Application.Grn.Services.IGrnImportService, GrnImportService>();
+        services.AddScoped<Inventory.Application.Reports.Services.IReportService, ReportService>();
 
         // Seeders
         services.AddScoped<DevDataSeeder>();

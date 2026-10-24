@@ -7,16 +7,20 @@
       "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{87B798AA-4432-4744-9F52-DA80C7A54E1A}|Inventory.Application\\Inventory.Application.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory.application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{87B798AA-4432-4744-9F52-DA80C7A54E1A}|Inventory.Application\\Inventory.Application.csproj|solutionrelative:inventory.application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|d:\\projects\\angular project\\inventory\\backend\\inventory\\inventory\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{7AB80102-E1C5-4FFF-A925-AFD95A897A14}|Inventory\\Inventory.csproj|solutionrelative:inventory\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +30,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Inventory\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Inventory\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-21T11:09:18.066Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -36,14 +52,14 @@
               "RelativeDocumentMoniker": "Inventory\\Controllers\\AuthController.cs",
               "ToolTip": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Inventory\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowB0AAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABQAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-16T05:49:58.271Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory.Application\\DependencyInjection.cs",
               "RelativeDocumentMoniker": "Inventory.Application\\DependencyInjection.cs",
@@ -55,26 +71,25 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Program.cs",
               "RelativeDocumentMoniker": "Inventory\\Program.cs",
               "ToolTip": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\Program.cs",
               "RelativeToolTip": "Inventory\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADIAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-10T06:41:09.328Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-10T06:41:09.328Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\appsettings.json",
               "RelativeDocumentMoniker": "Inventory\\appsettings.json",
               "ToolTip": "D:\\Projects\\angular project\\Inventory\\Backend\\Inventory\\Inventory\\appsettings.json",
               "RelativeToolTip": "Inventory\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-10-10T06:40:53.154Z"
             }

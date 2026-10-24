@@ -5,7 +5,7 @@ namespace Inventory.Domain.Entities;
 
 public class GrnApiResponse : BranchScopedEntity
 {
-    public int ApiCredentialId { get; set; }
+    public int? ApiCredentialId { get; set; }
     public ApiCredential? ApiCredential { get; set; }
 
     public Guid FetchBatchId { get; set; }

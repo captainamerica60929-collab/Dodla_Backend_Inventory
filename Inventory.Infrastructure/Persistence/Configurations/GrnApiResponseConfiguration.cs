@@ -16,7 +16,7 @@ public class GrnApiResponseConfiguration : IEntityTypeConfiguration<GrnApiRespon
             .IsRequired();
 
         builder.Property(r => r.ApiCredentialId)
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property(r => r.FetchBatchId)
             .IsRequired();
@@ -101,6 +101,7 @@ public class GrnApiResponseConfiguration : IEntityTypeConfiguration<GrnApiRespon
         builder.HasOne(r => r.ApiCredential)
             .WithMany()
             .HasForeignKey(r => r.ApiCredentialId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

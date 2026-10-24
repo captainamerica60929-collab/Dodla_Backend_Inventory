@@ -10,9 +10,9 @@ D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.AssemblyInfoInputs.cache
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.AssemblyInfo.cs
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.sourcelink.json
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventor.89798F14.Up2Date
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.dll
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\refint\Inventory.Infrastructure.dll
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.pdb
 D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\ref\Inventory.Infrastructure.dll
-D:\Projects\angular project\Inventory\Backend\Inventory\Inventory.Infrastructure\obj\Debug\net8.0\Inventory.Infrastructure.sourcelink.json

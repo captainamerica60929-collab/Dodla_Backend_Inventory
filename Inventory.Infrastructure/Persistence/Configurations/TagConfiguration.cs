@@ -25,6 +25,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
         builder.Property(t => t.Qty)
             .IsRequired();
 
+        builder.Property(t => t.RemainingQty)
+            .IsRequired()
+            .HasDefaultValue(0);
+
         builder.Property(t => t.Status)
             .IsRequired()
             .HasConversion<string>()

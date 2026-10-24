@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:16797",
+      "applicationUrl": "https://dodladairyapi.genuineitsolution.com",
       "sslPort": 0
     }
   },

@@ -127,6 +127,10 @@ public class ExcelImportTests : IClassFixture<TestWebApplicationFactory>
         Assert.Equal("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", response.Content.Headers.ContentType?.MediaType);
 
         var bytes = await response.Content.ReadAsByteArrayAsync();
+        var templateDir = @"D:\Projects\angular project\Inventory\templates";
+        Directory.CreateDirectory(templateDir);
+        await File.WriteAllBytesAsync(Path.Combine(templateDir, "materials-template.xlsx"), bytes);
+
         using var ms = new MemoryStream(bytes);
         using var wb = new XLWorkbook(ms);
 
@@ -150,6 +154,10 @@ public class ExcelImportTests : IClassFixture<TestWebApplicationFactory>
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         var bytes = await response.Content.ReadAsByteArrayAsync();
+        var templateDir = @"D:\Projects\angular project\Inventory\templates";
+        Directory.CreateDirectory(templateDir);
+        await File.WriteAllBytesAsync(Path.Combine(templateDir, "locations-template.xlsx"), bytes);
+
         using var ms = new MemoryStream(bytes);
         using var wb = new XLWorkbook(ms);
 

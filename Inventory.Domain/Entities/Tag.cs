@@ -19,6 +19,12 @@ public class Tag : BranchScopedEntity
     /// </summary>
     public int Qty { get; set; }
 
+    /// <summary>
+    /// Current remaining available quantity on this tag.
+    /// Deducted on outward issues while preserving remaining balance on this tag.
+    /// </summary>
+    public int RemainingQty { get; set; }
+
     public TagStatus Status { get; set; } = TagStatus.Generated;
 
     public int PrintCount { get; set; }

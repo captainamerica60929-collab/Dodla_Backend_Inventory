@@ -56,6 +56,23 @@ public class GlobalExceptionHandler : IExceptionHandler
                 "Conflict",
                 customConcurrencyEx.Message),
 
+            ArgumentException argEx => (
+                StatusCodes.Status400BadRequest,
+                "Bad Request",
+                argEx.Message),
+
+            BadHttpRequestException badHttpEx => (
+                StatusCodes.Status400BadRequest,
+                "Bad Request",
+                badHttpEx.Message),
+
+            System.Data.Common.DbException dbEx => (
+                StatusCodes.Status500InternalServerError,
+                "Database Error",
+                _environment.IsDevelopment()
+                    ? dbEx.ToString()
+                    : "A database error occurred while processing the request. Check parameters and logs."),
+
             _ => (
                 StatusCodes.Status500InternalServerError,
                 "Internal Server Error",
