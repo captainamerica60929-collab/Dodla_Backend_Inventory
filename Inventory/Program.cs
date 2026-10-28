@@ -44,10 +44,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowProduction", policy =>
     {
-        policy.WithOrigins(
-                  "https://dodladairy.genuineitsolution.com",
-                  "https://Dodladairy.genuineitsolution.com",
-                  "http://localhost:4200")
+        policy.WithOrigins("https://dodladairy.genuineitsolution.com", "http://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -101,7 +98,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowProduction");
+app.UseCors("AngularDevOrigin");
 
 app.UseRateLimiter();
 
