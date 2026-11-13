@@ -98,7 +98,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AngularDevOrigin");
+//app.UseCors("AngularDevOrigin");
+app.UseCors("AllowProduction");
 
 app.UseRateLimiter();
 

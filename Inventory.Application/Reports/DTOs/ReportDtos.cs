@@ -43,10 +43,16 @@ public record OutwardReportRowDto(
     string? PartName,
     string? LocationCode,
     int Qty,
+    int RemainingQty,
     DateTime IssuedAt,
     DateTime? OriginalInwardAt,
     string? OperatorName,
-    string? ClientIp);
+    string? ClientIp)
+{
+    public int IssuedQty => Qty;
+    public DateTime DispatchedAt => IssuedAt;
+    public string? UserNameSnapshot => OperatorName;
+}
 
 public record InStockReportFilter(
     string? MaterialCode = null,
@@ -67,11 +73,21 @@ public record InStockReportRowDto(
     int TotalTags,
     int TotalInStockQty,
     DateTime? OldestInwardAt,
-    DateTime? NewestInwardAt);
+    DateTime? NewestInwardAt)
+{
+    public int TotalStockQty => TotalInStockQty;
+    public int TotalQty => TotalInStockQty;
+    public int ActiveTags => TotalTags;
+    public int TagCount => TotalTags;
+}
 
 public record LabelScanReportFilter(
     string? TagNo = null,
     string? EventType = null,
+    string? ActionType = null,
+    string? Search = null,
+    DateTime? FromDate = null,
+    DateTime? ToDate = null,
     int? BranchId = null,
     bool CrossBranch = false,
     int Page = 1,
@@ -82,15 +98,27 @@ public record LabelScanReportRowDto(
     int BranchId,
     string BranchCode,
     string TagNo,
+    string MaterialCode,
+    int Qty,
     string EventType,
+    string? PrinterIp,
     string? Details,
     string? Reason,
     string? OperatorName,
     string? ClientIp,
-    DateTime Timestamp);
+    DateTime Timestamp)
+{
+    public string ActionType => EventType;
+    public string? Operator => OperatorName ?? UserNameSnapshot;
+    public string? UserNameSnapshot => OperatorName;
+}
 
 public record OverallReportFilter(
-    string GroupBy = "date",
+    string GroupBy = "material",
+    string? Search = null,
+    string? MaterialCode = null,
+    DateTime? FromDate = null,
+    DateTime? ToDate = null,
     int? BranchId = null,
     bool CrossBranch = false,
     int Page = 1,
@@ -98,10 +126,19 @@ public record OverallReportFilter(
 
 public record OverallReportRowDto(
     string GroupKey,
+    string MaterialCode,
+    string? PartName,
     int TotalInwardQty,
     int TotalOutwardQty,
     int CurrentStockQty,
-    int TotalMovements);
+    int TotalMovements,
+    DateTime? LastMovementAt = null)
+{
+    public int TotalInwarded => TotalInwardQty;
+    public int TotalIssued => TotalOutwardQty;
+    public int CurrentStock => CurrentStockQty;
+    public int MovementCount => TotalMovements;
+}
 
 public record AcceptRejectReportFilter(
     string? Status = null,
@@ -123,7 +160,11 @@ public record AcceptRejectReportRowDto(
     string? Reason,
     string? InspectorName,
     string? ClientIp,
-    DateTime ProcessedAt);
+    DateTime ProcessedAt)
+{
+    public string? Inspector => InspectorName;
+    public string? UserNameSnapshot => InspectorName;
+}
 
 public record LocationTransferReportFilter(
     string? TagNo = null,
@@ -146,7 +187,11 @@ public record LocationTransferReportRowDto(
     string? Reason,
     string? OperatorName,
     string? ClientIp,
-    DateTime TransferredAt);
+    DateTime TransferredAt)
+{
+    public string? Operator => OperatorName ?? UserNameSnapshot;
+    public string? UserNameSnapshot => OperatorName;
+}
 
 public record DashboardLiveMetricsDto(
     int TotalRegisteredItems,

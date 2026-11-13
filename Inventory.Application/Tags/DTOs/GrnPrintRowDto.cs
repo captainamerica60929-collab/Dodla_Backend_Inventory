@@ -6,6 +6,8 @@ public record GrnPrintRowDto(
     string? GrnDate,
     string? InvoiceNo,
     string? PartName,
+    /// <summary>SAP/ERP material code — used by the @partcode@ / @materialcode@ ZPL placeholder.</summary>
+    string? MaterialCode,
     string? Description,
     decimal? Qty,
     string? Uom,

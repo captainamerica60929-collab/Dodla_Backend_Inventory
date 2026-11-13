@@ -202,7 +202,7 @@ public class ReportEndpointIntegrationTests : IClassFixture<TestWebApplicationFa
         var inData = await inResp.Content.ReadFromJsonAsync<PagedResult<InwardReportRowDto>>();
         Assert.NotNull(inData);
         Assert.True(inData.TotalCount >= 1);
-        Assert.Contains(inData.Items, i => i.MaterialCode == matCode);
+        Assert.Contains(inData.Items, i => i.MaterialCode == matCode && i.Qty == 100 && i.OperatorName != null);
 
         // 2. Outward Report
         var outResp = await _client.GetAsync($"/api/reports/outward?materialCode={matCode}");
@@ -210,6 +210,7 @@ public class ReportEndpointIntegrationTests : IClassFixture<TestWebApplicationFa
         var outData = await outResp.Content.ReadFromJsonAsync<PagedResult<OutwardReportRowDto>>();
         Assert.NotNull(outData);
         Assert.True(outData.TotalCount >= 1);
+        Assert.Contains(outData.Items, i => i.MaterialCode == matCode && i.Qty == 30 && i.RemainingQty == 100 && i.OperatorName != null);
 
         // 3. In-Stock Report
         var stockResp = await _client.GetAsync($"/api/reports/in-stock?materialCode={matCode}");
@@ -217,12 +218,15 @@ public class ReportEndpointIntegrationTests : IClassFixture<TestWebApplicationFa
         var stockData = await stockResp.Content.ReadFromJsonAsync<PagedResult<InStockReportRowDto>>();
         Assert.NotNull(stockData);
         Assert.True(stockData.TotalCount >= 1);
+        Assert.Contains(stockData.Items, i => i.MaterialCode == matCode && i.TotalInStockQty == 100 && i.TotalTags >= 1);
 
         // 4. Label Scan Report
         var scanResp = await _client.GetAsync($"/api/reports/label-scan?tagNo={tagNo}");
         Assert.Equal(HttpStatusCode.OK, scanResp.StatusCode);
         var scanData = await scanResp.Content.ReadFromJsonAsync<PagedResult<LabelScanReportRowDto>>();
         Assert.NotNull(scanData);
+        Assert.True(scanData.TotalCount >= 1);
+        Assert.Contains(scanData.Items, i => i.TagNo == tagNo && i.Qty > 0 && !string.IsNullOrEmpty(i.PrinterIp) && i.OperatorName != null);
 
         // 5. Overall Report
         var overallResp = await _client.GetAsync("/api/reports/overall?groupBy=material");
@@ -230,6 +234,7 @@ public class ReportEndpointIntegrationTests : IClassFixture<TestWebApplicationFa
         var overallData = await overallResp.Content.ReadFromJsonAsync<PagedResult<OverallReportRowDto>>();
         Assert.NotNull(overallData);
         Assert.True(overallData.TotalCount >= 1);
+        Assert.Contains(overallData.Items, i => i.MaterialCode == matCode && i.TotalInwardQty == 100 && i.TotalOutwardQty == 30 && i.CurrentStockQty >= 0);
 
         // 6. Accept / Reject Report
         var arResp = await _client.GetAsync($"/api/reports/accept-reject?materialCode={matCode}");
@@ -237,6 +242,7 @@ public class ReportEndpointIntegrationTests : IClassFixture<TestWebApplicationFa
         var arData = await arResp.Content.ReadFromJsonAsync<PagedResult<AcceptRejectReportRowDto>>();
         Assert.NotNull(arData);
         Assert.True(arData.TotalCount >= 1);
+        Assert.Contains(arData.Items, i => i.MaterialCode == matCode && i.Status == "Accepted" && i.InspectorName == "Inspector 1");
 
         // 7. Location Transfer Report
         var trResp = await _client.GetAsync($"/api/reports/location-transfer?tagNo={tagNo}");
@@ -244,6 +250,7 @@ public class ReportEndpointIntegrationTests : IClassFixture<TestWebApplicationFa
         var trData = await trResp.Content.ReadFromJsonAsync<PagedResult<LocationTransferReportRowDto>>();
         Assert.NotNull(trData);
         Assert.True(trData.TotalCount >= 1);
+        Assert.Contains(trData.Items, i => i.TagNo == tagNo && i.FromLocationCode == "LOC-A" && i.OperatorName == "Operator 1");
 
         // 8. Live Dashboard API
         var dashResp = await _client.GetAsync("/api/reports/dashboard-live");
